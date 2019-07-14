@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {FlatList, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import ChildScreen from "./ChildScreen";
 
 export default class SplashScreen extends Component {
 
@@ -39,10 +40,12 @@ export default class SplashScreen extends Component {
     }
 
     renderItem = (item) => {
-        console.log("ITEM" + JSON.stringify(item));
-        return (<View>
-
-        </View>)
+        return (
+            <ChildScreen
+                item={item.shortedData}
+                date={item.date}
+            />
+        );
     };
 
 
@@ -74,7 +77,9 @@ export default class SplashScreen extends Component {
                         };
                         array.push(data);
                         let obj = {
-                            "shortedData": array
+                            "shortedData": array,
+                            "date": json.list[i].dt_txt.slice(0, 10)
+
                         };
                         grouping.push(obj);
                         array = [];
@@ -89,7 +94,8 @@ export default class SplashScreen extends Component {
                         };
                         array.push(data);
                         let obj = {
-                            "shortedData": array
+                            "shortedData": array,
+                            "date": json.list[i].dt_txt.slice(0, 10)
                         };
                         grouping.push(obj);
                         array = [];
@@ -107,7 +113,8 @@ export default class SplashScreen extends Component {
                     };
                     array.push(data);
                     let obj = {
-                        "shortedData": array
+                        "shortedData": array,
+                        "date": json.list[i].dt_txt.slice(0, 10)
                     };
                     grouping.push(obj);
                 } else {
