@@ -49,7 +49,7 @@ export default class SplashScreen extends Component {
     };
 
 
-    shortAccordingToDate = async () => {
+    shortAccordingToDate = () => {
         const json = require('../test.json');
         let grouping = [];
         let array = [];
@@ -132,7 +132,7 @@ export default class SplashScreen extends Component {
 
             }
         }
-        await this.setState({weatherData: grouping})
+        this.setState({weatherData: grouping})
     }
 }
 

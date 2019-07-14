@@ -25,13 +25,13 @@ export default class ChildScreen extends Component {
 
 
     renderView = () => {
-        return (this.props.item.map((item) => {
+        return (this.props.item.map((item, index) => {
                 return (
-                    <View style={styles.mainContainerStyle}>
-                        <Text>{" Temprature : " + item.main.temp}</Text>
+                    <View style={styles.mainContainerStyle} key={index}>
+                        <Text>{" Temperature : " + item.main.temp}</Text>
                         <Text>{" MIN : " + item.main.temp_min}</Text>
                         <Text>{" MAX : " + item.main.temp_max}</Text>
-                        <Text>{" humidity : " + item.main.humidity}</Text>
+                        <Text>{" Humidity : " + item.main.humidity}</Text>
                         <Text>{" Description : " + item.weather[0].description}</Text>
                     </View>
                 )
