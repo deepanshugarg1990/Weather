@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FlatList, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, ImageBackground, StyleSheet, Text, TextInput, View} from 'react-native';
 import ChildScreen from "./ChildScreen";
 
 export default class SplashScreen extends Component {
@@ -7,7 +7,8 @@ export default class SplashScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            weatherData: []
+            weatherData: [],
+            city: ''
         };
     }
 
@@ -25,9 +26,24 @@ export default class SplashScreen extends Component {
                         <Image
                             style={{width: 25, height: 25, marginTop: 5}}
                             source={require('../assets/pin.png')}/>
-                        <Text style={{fontSize: 20, marginTop: 4, fontWeight: '500'}}>Hello</Text>
+                        <Text style={{fontSize: 20, marginTop: 4, fontWeight: '500'}}>{this.state.city}</Text>
                     </View>
-
+                    <View
+                        style={{
+                            backgroundColor: '#fefefe',
+                            marginLeft: 10,
+                            marginRight: 10
+                        }}>
+                        <TextInput
+                            multiline={false}
+                            editable={true}
+                            maxLength={10}
+                            underlineColorAndroid = "transparent"
+                            autoCorrect={false}
+                            autoCapitalize = "characters"
+                            onSubmitEditing={(zipCode) => this.onZipCodeSearch(zipCode)}
+                        />
+                    </View>
                     <FlatList
                         data={this.state.weatherData}
                         extraData={this.state}
@@ -38,6 +54,10 @@ export default class SplashScreen extends Component {
             </View>
         );
     }
+
+    onZipCodeSearch = (data) => {
+
+    };
 
     renderItem = (item) => {
         return (
@@ -132,7 +152,7 @@ export default class SplashScreen extends Component {
 
             }
         }
-        this.setState({weatherData: grouping})
+        this.setState({weatherData: grouping, city: json.city.name})
     }
 }
 
