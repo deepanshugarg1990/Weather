@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {FlatList, Image, ImageBackground, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, TextInput, View} from 'react-native';
 import ChildScreen from "./ChildScreen";
+import LoadingComponent from "../Utility/LoadingComponent";
 
 export default class SplashScreen extends Component {
 
@@ -15,7 +16,7 @@ export default class SplashScreen extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <ImageBackground source={require('../assets/pic.jpeg')}
                                  style={styles.backGroundStyle}/>
                 <View style={styles.outerComponentStyle}>
@@ -51,6 +52,14 @@ export default class SplashScreen extends Component {
                         keyExtractor={(item, index) => item.key}
                         renderItem={({item}) => this.renderItem(item)}
                     />}
+                    {!this.props.data &&
+                    <View style={{
+                        alignSelf: 'center',
+                        marginTop: Math.round(Dimensions.get('window').height) / 2
+                    }}>
+                        <Text>No data found</Text>
+                    </View>}
+                    {this.props.loading && <LoadingComponent/>}
                 </View>
             </View>
         );
@@ -172,6 +181,7 @@ const styles = StyleSheet.create({
     outerComponentStyle: {
         position: 'absolute',
         alignSelf: 'center',
+        flex: 1,
         left: 0,
         top: 0,
         right: 0,

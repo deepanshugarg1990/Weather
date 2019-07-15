@@ -7,7 +7,8 @@ export default class SplashContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: undefined
+            data: undefined,
+            loading: false
         }
     }
 
@@ -16,17 +17,18 @@ export default class SplashContainer extends Component {
             <SplashScreen
                 data={this.state.data}
                 onSubmitEditing={this.onSubmitEditing}
+                loading={this.state.loading}
             />
         );
     }
 
 
     onSubmitEditing = (text) => {
-        this.setState({data: undefined});
+        this.setState({data: undefined, loading: true});
         ApiCalls.callWeatherData(text, (response) => {
-            this.setState({data: response.data});
+            this.setState({data: response.data, loading: false});
         }, (failureResponse) => {
-
+            this.setState({data: undefined, loading: false});
         })
     };
 }
