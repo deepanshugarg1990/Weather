@@ -7,7 +7,7 @@ export default class SplashContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data : undefined
+            data: undefined
         }
     }
 
@@ -22,8 +22,9 @@ export default class SplashContainer extends Component {
 
 
     onSubmitEditing = (text) => {
+        this.setState({data: undefined});
         ApiCalls.callWeatherData(text, (response) => {
-          this.setState({data: response.data});
+            this.setState({data: response.data});
         }, (failureResponse) => {
 
         })
