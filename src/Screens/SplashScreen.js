@@ -74,7 +74,7 @@ export default class SplashScreen extends Component {
     };
 
 
-    shortAccordingToDate = () => {
+    shortAccordingToDate = (jsonData) => {
         const json = require('../test.json');
         let grouping = [];
         let array = [];

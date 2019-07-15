@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {SplashScreen} from "../Screens/index";
+import * as ApiCalls from "../api/ApiCalls"
 
 export default class SplashContainer extends Component {
     render() {
@@ -13,7 +14,12 @@ export default class SplashContainer extends Component {
 
 
     onSubmitEditing = (text) => {
+        // Getting error for invalid api key
+        ApiCalls.callWeatherData(text, (response) => {
 
+        }, (failureResponse) => {
+
+        })
     };
 }
 
