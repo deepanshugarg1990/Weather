@@ -8,7 +8,8 @@ export default class SplashScreen extends Component {
         super(props);
         this.state = {
             weatherData: [],
-            city: ''
+            city: '',
+            inputText: ''
         };
     }
 
@@ -40,8 +41,12 @@ export default class SplashScreen extends Component {
                             maxLength={10}
                             underlineColorAndroid = "transparent"
                             autoCorrect={false}
+                            returnKeyType='search'
+                            placeholder={"Enter your zip code"}
                             autoCapitalize = "characters"
-                            onSubmitEditing={(zipCode) => this.onZipCodeSearch(zipCode)}
+                            blurOnSubmit={true}
+                            onChangeText={(text) => this.onChangeText(text)}
+                            onSubmitEditing={() => this.props.onSubmitEditing(this.state.inputText)}
                         />
                     </View>
                     <FlatList
@@ -55,8 +60,8 @@ export default class SplashScreen extends Component {
         );
     }
 
-    onZipCodeSearch = (data) => {
-
+    onChangeText = (text) => {
+        this.setState({inputText: text});
     };
 
     renderItem = (item) => {

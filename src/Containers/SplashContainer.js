@@ -5,9 +5,16 @@ import {SplashScreen} from "../Screens/index";
 export default class SplashContainer extends Component {
     render() {
         return (
-            <SplashScreen/>
+            <SplashScreen
+                onSubmitEditing={this.onSubmitEditing}
+            />
         );
     }
+
+
+    onSubmitEditing = (text) => {
+
+    };
 }
 
 const styles = StyleSheet.create({
