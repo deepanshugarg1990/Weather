@@ -1,5 +1,6 @@
 import {Alert, Linking, NetInfo, Platform} from "react-native";
 import DeviceSettings from "react-native-device-settings";
+import * as String from './Strings';
 
 export async function getNetInfo() {
     if (Platform.OS === "ios") {
@@ -23,14 +24,14 @@ export async function getNetInfo() {
 
 
 export function showNoInternetDialog() {
-    Alert.alert("No Internet", "This feature requires internet connection. Please check your internet settings and try again.", [
+    Alert.alert(String.NO_INTERNET, String.REQUIREMENT, [
         {
-            text: 'Settings',
+            text: String.SETTING,
             onPress: () => {
                 openSettings();
             }
         }, {
-            text: 'OK',
+            text: String.OK,
             onPress: () => {
             }
         }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
+import * as Colors from './Colors';
 
 class LoadingComponent extends Component {
 
@@ -14,15 +15,15 @@ class LoadingComponent extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
                 bottom: 0,
-                backgroundColor: this.props.backgroundColor || '#00000000',
+                backgroundColor: this.props.backgroundColor || Colors.TRANSPARENT,
                 top: 0,
                 right: 0,
                 left: 0,
                 elevation: this.props.elevation || 0
             }}>
-                <ActivityIndicator size="large" color={'#DC592B'}/>
+                <ActivityIndicator size="large" color={Colors.COLOR_PRIMARY}/>
                 {this.props.msg ? <Text style={{
-                    color: Colors.white,
+                    color: Colors.WHITE,
                     fontSize: 16,
                     textAlign: 'center',
                     padding: 12,

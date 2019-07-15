@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View} from "react-native";
+import * as Colors from '../Utility/Colors'
 
 export default class ChildScreen extends Component {
 
@@ -11,7 +12,13 @@ export default class ChildScreen extends Component {
     render() {
         return (
             <View>
-                <Text style={{marginTop: 10, marginLeft: 10}}>{this.props.date}</Text>
+                <Text
+                    style={{
+                        marginTop: 10,
+                        marginLeft: 10
+                    }}>
+                    {this.props.date}
+                </Text>
                 <View style={{flexDirection: 'row'}}>
                     <ScrollView
                         horizontal={true}
@@ -33,6 +40,8 @@ export default class ChildScreen extends Component {
                         <Text>{" MAX : " + item.main.temp_max}</Text>
                         <Text>{" Humidity : " + item.main.humidity}</Text>
                         <Text>{" Description : " + item.weather[0].description}</Text>
+                        <Text>{" Date Time : " + item.date}</Text>
+
                     </View>
                 )
             })
@@ -53,7 +62,7 @@ const styles = StyleSheet.create({
         marginTop: 7,
         borderRadius: 5,
         elevation: 2,
-        backgroundColor: '#fefefe',
+        backgroundColor: Colors.WHITE_BACKGROUND,
         padding: 10,
         marginLeft: 10, marginRight: 10,
         flexDirection: 'column',

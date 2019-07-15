@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, TextInput, View} from 'react-native';
 import ChildScreen from "./ChildScreen";
 import LoadingComponent from "../Utility/LoadingComponent";
+import * as Strings from '../Utility/Strings'
 
 export default class SplashScreen extends Component {
 
@@ -27,11 +28,7 @@ export default class SplashScreen extends Component {
                         <Text style={{fontSize: 20, marginTop: 4, fontWeight: '500'}}>{this.state.city}</Text>
                     </View>
                     <View
-                        style={{
-                            backgroundColor: '#fefefe',
-                            marginLeft: 10,
-                            marginRight: 10
-                        }}>
+                        style={styles.viewStyle}>
                         <TextInput
                             multiline={false}
                             editable={true}
@@ -39,7 +36,7 @@ export default class SplashScreen extends Component {
                             underlineColorAndroid="transparent"
                             autoCorrect={false}
                             returnKeyType='search'
-                            placeholder={"Enter your zip code"}
+                            placeholder={Strings.ZIP_CODE}
                             autoCapitalize="characters"
                             blurOnSubmit={true}
                             onChangeText={(text) => this.onChangeText(text)}
@@ -53,10 +50,7 @@ export default class SplashScreen extends Component {
                         renderItem={({item}) => this.renderItem(item)}
                     />}
                     {!this.props.data &&
-                    <View style={{
-                        alignSelf: 'center',
-                        marginTop: Math.round(Dimensions.get('window').height) / 2
-                    }}>
+                    <View style={styles.progressbarStyle}>
                         <Text>No data found</Text>
                     </View>}
                     {this.props.loading && <LoadingComponent/>}
@@ -187,4 +181,14 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
     },
+    progressbarStyle: {
+        alignSelf: 'center',
+        marginTop: Math.round(Dimensions.get('window').height) / 2
+    },
+    viewStyle: {
+        backgroundColor: '#fefefe',
+        marginLeft: 10,
+        marginRight: 10
+    }
+
 });
