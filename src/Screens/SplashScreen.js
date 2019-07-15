@@ -13,10 +13,6 @@ export default class SplashScreen extends Component {
         };
     }
 
-    componentDidMount() {
-        this.shortAccordingToDate();
-    }
-
     render() {
         return (
             <View>
@@ -39,26 +35,31 @@ export default class SplashScreen extends Component {
                             multiline={false}
                             editable={true}
                             maxLength={10}
-                            underlineColorAndroid = "transparent"
+                            underlineColorAndroid="transparent"
                             autoCorrect={false}
                             returnKeyType='search'
                             placeholder={"Enter your zip code"}
-                            autoCapitalize = "characters"
+                            autoCapitalize="characters"
                             blurOnSubmit={true}
                             onChangeText={(text) => this.onChangeText(text)}
                             onSubmitEditing={() => this.props.onSubmitEditing(this.state.inputText)}
                         />
                     </View>
-                    <FlatList
+                    {this.props.data && <FlatList
                         data={this.state.weatherData}
                         extraData={this.state}
                         keyExtractor={(item, index) => item.key}
                         renderItem={({item}) => this.renderItem(item)}
-                    />
+                    />}
                 </View>
             </View>
         );
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.shortAccordingToDate(nextProps.data);
+    }
+
 
     onChangeText = (text) => {
         this.setState({inputText: text});
@@ -74,24 +75,13 @@ export default class SplashScreen extends Component {
     };
 
 
-    shortAccordingToDate = (jsonData) => {
-        const json = require('../test.json');
+    shortAccordingToDate = (json) => {
         let grouping = [];
         let array = [];
-        for (let i = 0; i < json.list.length; i++) {
-            if (i !== json.list.length - 1) {
-                if (json.list[i].dt_txt.slice(0, 10) === json.list[i + 1].dt_txt.slice(0, 10)) {
-                    let data = {
-                        "main": json.list[i].main,
-                        "weather": json.list[i].weather,
-                        "clouds": json.list[i].clouds,
-                        "wind": json.list[i].wind,
-                        "rain": json.list[i].rain,
-                        "date": json.list[i].dt_txt,
-                    };
-                    array.push(data);
-                } else {
-                    if (grouping.length === 0) {
+        if (json) {
+            for (let i = 0; i < json.list.length; i++) {
+                if (i !== json.list.length - 1) {
+                    if (json.list[i].dt_txt.slice(0, 10) === json.list[i + 1].dt_txt.slice(0, 10)) {
                         let data = {
                             "main": json.list[i].main,
                             "weather": json.list[i].weather,
@@ -101,14 +91,44 @@ export default class SplashScreen extends Component {
                             "date": json.list[i].dt_txt,
                         };
                         array.push(data);
-                        let obj = {
-                            "shortedData": array,
-                            "date": json.list[i].dt_txt.slice(0, 10)
-
-                        };
-                        grouping.push(obj);
-                        array = [];
                     } else {
+                        if (grouping.length === 0) {
+                            let data = {
+                                "main": json.list[i].main,
+                                "weather": json.list[i].weather,
+                                "clouds": json.list[i].clouds,
+                                "wind": json.list[i].wind,
+                                "rain": json.list[i].rain,
+                                "date": json.list[i].dt_txt,
+                            };
+                            array.push(data);
+                            let obj = {
+                                "shortedData": array,
+                                "date": json.list[i].dt_txt.slice(0, 10)
+
+                            };
+                            grouping.push(obj);
+                            array = [];
+                        } else {
+                            let data = {
+                                "main": json.list[i].main,
+                                "weather": json.list[i].weather,
+                                "clouds": json.list[i].clouds,
+                                "wind": json.list[i].wind,
+                                "rain": json.list[i].rain,
+                                "date": json.list[i].dt_txt,
+                            };
+                            array.push(data);
+                            let obj = {
+                                "shortedData": array,
+                                "date": json.list[i].dt_txt.slice(0, 10)
+                            };
+                            grouping.push(obj);
+                            array = [];
+                        }
+                    }
+                } else {
+                    if (json.list[i - 1].dt_txt.slice(0, 10) === json.list[i].dt_txt.slice(0, 10)) {
                         let data = {
                             "main": json.list[i].main,
                             "weather": json.list[i].weather,
@@ -123,41 +143,23 @@ export default class SplashScreen extends Component {
                             "date": json.list[i].dt_txt.slice(0, 10)
                         };
                         grouping.push(obj);
+                    } else {
                         array = [];
+                        let data = {
+                            "main": json.list[i].main,
+                            "weather": json.list[i].weather,
+                            "clouds": json.list[i].clouds,
+                            "wind": json.list[i].wind,
+                            "rain": json.list[i].rain,
+                            "date": json.list[i].dt_txt,
+                        };
+                        array.push(data);
                     }
-                }
-            } else {
-                if (json.list[i - 1].dt_txt.slice(0, 10) === json.list[i].dt_txt.slice(0, 10)) {
-                    let data = {
-                        "main": json.list[i].main,
-                        "weather": json.list[i].weather,
-                        "clouds": json.list[i].clouds,
-                        "wind": json.list[i].wind,
-                        "rain": json.list[i].rain,
-                        "date": json.list[i].dt_txt,
-                    };
-                    array.push(data);
-                    let obj = {
-                        "shortedData": array,
-                        "date": json.list[i].dt_txt.slice(0, 10)
-                    };
-                    grouping.push(obj);
-                } else {
-                    array = [];
-                    let data = {
-                        "main": json.list[i].main,
-                        "weather": json.list[i].weather,
-                        "clouds": json.list[i].clouds,
-                        "wind": json.list[i].wind,
-                        "rain": json.list[i].rain,
-                        "date": json.list[i].dt_txt,
-                    };
-                    array.push(data);
-                }
 
+                }
             }
+            this.setState({weatherData: grouping, city: json.city.name})
         }
-        this.setState({weatherData: grouping, city: json.city.name})
     }
 }
 

@@ -7,13 +7,6 @@ export function apiRequest(url, showDialog,
                            callback,
                            params,
                            callbackFailure) {
-
-
-    console.log("url : " + url);
-    console.log("DATA PARAM : " + params);
-    let query = '';
-    query = paramsToUrlQueryParams(params);
-
     Utility.getNetInfo().then(isConnected => {
         if (!isConnected) {
             if (showDialog) {
@@ -25,7 +18,7 @@ export function apiRequest(url, showDialog,
         axios({
             method: 'GET',
             url: url,
-            params: query,
+            params: params,
             timeout: FETCH_TIMEOUT,
         }).then(function (response) {
             console.log("apiRequest :", response);
@@ -36,28 +29,15 @@ export function apiRequest(url, showDialog,
             }
         })
             .catch(function (error) {
-                console.log("error :");
-                console.log(error);
                 callbackFailure && callbackFailure(error);
             });
     });
 }
 
 
-function paramsToUrlQueryParams(params) {
-    let esc = encodeURIComponent;
-    let query = "";
-    if (params) {
-        query = '?';
-        query += Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
-    }
-    return query;
-}
-
-
 export function callWeatherData(zipData, callbackSuccess, callbackFailure) {
     let data = {
-        "zip": "122001",
+        "zip": zipData,
         "appid": "b6907d289e10d714a6e88b30761fae22"
     };
     apiRequest("https://samples.openweathermap.org/data/2.5/forecast",

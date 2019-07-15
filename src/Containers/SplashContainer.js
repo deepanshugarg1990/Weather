@@ -4,9 +4,17 @@ import {SplashScreen} from "../Screens/index";
 import * as ApiCalls from "../api/ApiCalls"
 
 export default class SplashContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data : undefined
+        }
+    }
+
     render() {
         return (
             <SplashScreen
+                data={this.state.data}
                 onSubmitEditing={this.onSubmitEditing}
             />
         );
@@ -14,9 +22,8 @@ export default class SplashContainer extends Component {
 
 
     onSubmitEditing = (text) => {
-        // Getting error for invalid api key
         ApiCalls.callWeatherData(text, (response) => {
-
+          this.setState({data: response.data});
         }, (failureResponse) => {
 
         })
